@@ -1,0 +1,29 @@
+{
+    "name": "wherd/phplease-project",
+    "description": "Phplease skeleton project",
+    "type": "template",
+    "require": {
+        "wherd/phplease": "^1.3",
+        "wherd/signal": "^2.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.6",
+        "friendsofphp/php-cs-fixer": "^3.8"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sérgio Leal",
+            "email": "10581693+wherd@users.noreply.github.com"
+        }
+    ],
+    "scripts": {
+      "fmt": "php-cs-fixer fix src",
+      "analyse": "phpstan analyse --level 8 src"
+    }
+}
