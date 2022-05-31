@@ -13,7 +13,7 @@
 
 <section class="space-y-2">
   <h2 class="text-xl mb-2">About this page</h2>
-  <p class="text-gray-600">The page you are looking at is being generated dynamically by CodeIgniter.</p>
+  <p class="text-gray-600">The page you are looking at is being generated dynamically by Phplease.</p>
   <p class="text-gray-600">If you would like to edit this page you will find it located at:</p>
   <pre class="font-mono bg-gray-100 inline text-gray-600 text-sm"><code>var/themes/home/index.signal.php</code></pre>
   <p class="text-gray-600">The corresponding controller for this page can be found at:</p>
