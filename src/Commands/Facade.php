@@ -38,14 +38,14 @@ class Facade
         $signatures = '';
 
         foreach ($methods as $m) {
-            if ($m->getName() === '__construct') {
+            if ('__construct' === $m->getName()) {
                 continue;
             }
 
             $signature = ' * @method static';
 
             $return_type = $m->getReturnType();
-            if ($return_type) {
+            if ($return_type instanceof \ReflectionNamedType) {
                 $signature .= ' ' . $return_type->getName();
             }
 
@@ -62,7 +62,7 @@ class Facade
                     $param .= $type . ' ';
                 }
 
-                $param .= $p->getName();
+                $param .= '$' . $p->getName();
                 $method_params[] = $param;
             }
 
@@ -82,9 +82,9 @@ $signatures *
  */
 class $output_class
 {
-    protected static $class_name \$instance;
+    protected static ?$class_name \$instance;
 
-    public static function getInstance()
+    public static function getInstance(): $class_name
     {
         if (static::\$instance === null) {
             static::\$instance = \Phplease\Foundation\Application::getInstance()->providerOf('$provider');
@@ -96,7 +96,13 @@ class $output_class
     /** @param array<mixed> \$arguments */
     public static function __callStatic(string \$name, array \$arguments): mixed
     {
-        return call_user_func_array([static::getInstance(), \$name], \$arguments);
+        \$callback = [static::getInstance(), \$name];
+
+        if (is_callable(\$callback)) {
+            return call_user_func_array(\$callback, \$arguments);
+        }
+
+        throw new \Exception("Method \$name not found on class $class_name");
     }
 }
 

@@ -13,6 +13,10 @@ class Migrations
     /** Create a new migration file. */
     public function create(string ...$name): string
     {
+        if (!defined('ROOT')) {
+            throw new RuntimeException('ROOT constant is not defined');
+        }
+
         if (empty($name)) {
             return 'Please provide a migration name.';
         }
@@ -57,7 +61,10 @@ class Migrations
             $parts = explode('.', $filename);
             $class_name = $parts[1];
             $object = new $class_name();
-            $object->up($db);
+
+            if (method_exists($object, 'up')) {
+                $object->up($db);
+            }
 
             $query->execute($filename, time());
         }
@@ -88,7 +95,10 @@ class Migrations
         $parts = explode('.', $filename);
         $class_name = $parts[1];
         $object = new $class_name();
-        $object->down($db);
+        
+        if (method_exists($object, 'down')) {
+            $object->down($db);
+        }
 
         $db->execute('DELETE FROM migrations WHERE filename=?', $filename);
 
